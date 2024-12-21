@@ -14,7 +14,6 @@ import com.example.to_docompose.util.RequestState
 import com.example.to_docompose.util.SearchAppBarState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -53,6 +52,11 @@ class SharedViewModel @Inject constructor(
     private val _sortState = MutableStateFlow<RequestState<Priority>>(RequestState.Idle)
     val sortState: StateFlow<RequestState<Priority>> = _sortState
 
+    init {
+        getAllTasks()
+        readSortState()
+    }
+
     val lowPriorityTasks: StateFlow<List<ToDoTask>> =
         repository.sortByByLowPriority.stateIn(
             scope = viewModelScope,
@@ -89,7 +93,7 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-    fun readSortState() {
+    private fun readSortState() {
         _sortState.value = RequestState.Loading
         try {
             viewModelScope.launch {
@@ -106,7 +110,7 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-    fun getAllTasks() {
+    private fun getAllTasks() {
         _allTasks.value = RequestState.Loading
         try {
             viewModelScope.launch {
@@ -194,7 +198,6 @@ class SharedViewModel @Inject constructor(
             else -> {
             }
         }
-        this.action.value = Action.NO_ACTION
     }
 
 
