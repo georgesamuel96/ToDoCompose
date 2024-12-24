@@ -6,11 +6,11 @@ import com.example.to_docompose.util.Constants.LIST_SCREEN
 import com.example.to_docompose.util.Constants.SPLASH_SCREEN
 
 class Screens(navController: NavHostController) {
-    val splash: () -> Unit = {
-        navController.navigate("list/${Action.NO_ACTION.name}") {
-            popUpTo(SPLASH_SCREEN) { inclusive = true }
-        }
-    }
+//    val splash: () -> Unit = {
+//        navController.navigate("list/${Action.NO_ACTION.name}") {
+//            popUpTo(SPLASH_SCREEN) { inclusive = true }
+//        }
+//    }
 
     val task: (Action) -> Unit = { action ->
         navController.navigate("list/${action.name}") {
