@@ -42,7 +42,6 @@ import com.example.to_docompose.ui.theme.TOP_APP_BAR_HEIGHT
 import com.example.to_docompose.ui.viewmodels.SharedViewModel
 import com.example.to_docompose.util.Action
 import com.example.to_docompose.util.SearchAppBarState
-import com.example.to_docompose.util.TrailingIconState
 
 @Composable
 fun ListAppBar(
@@ -235,8 +234,6 @@ fun SearchAppBar(
     onCloseCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit
 ) {
-    var trailingIconState: TrailingIconState
-            by remember { mutableStateOf(TrailingIconState.READY_TO_DELETE) }
 
     Surface(
         modifier = Modifier
@@ -275,20 +272,10 @@ fun SearchAppBar(
             trailingIcon = {
                 IconButton(
                     onClick = {
-                        when (trailingIconState) {
-                            TrailingIconState.READY_TO_DELETE -> {
-                                onTextChange("")
-                                trailingIconState = TrailingIconState.READY_TO_CLOSE
-                            }
-
-                            TrailingIconState.READY_TO_CLOSE -> {
-                                if (text.isNotEmpty()) {
-                                    onTextChange("")
-                                } else {
-                                    onCloseCloseClicked()
-                                    trailingIconState = TrailingIconState.READY_TO_DELETE
-                                }
-                            }
+                        if(text.isNotEmpty()) {
+                            onTextChange("")
+                        } else {
+                            onCloseCloseClicked()
                         }
                     }
                 ) {
