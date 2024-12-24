@@ -53,14 +53,14 @@ fun ListAppBar(
         SearchAppBarState.CLOSED -> {
             DefaultListAppBar(
                 onSearchClicked = {
-                    sharedViewModel.searchAppBarState.value =
-                        SearchAppBarState.OPEN
+                    sharedViewModel.updateAppBarState(SearchAppBarState.OPEN)
+
                 },
                 onSortClicked = {
                     sharedViewModel.persisSortingState(it)
                 },
                 onDeleteAllConfirmed = {
-                    sharedViewModel.action.value = Action.DELETE_ALL
+                    sharedViewModel.updateAction(Action.DELETE_ALL)
                 }
             )
         }
@@ -72,12 +72,11 @@ fun ListAppBar(
                     sharedViewModel.searchDatabase(searchQuery = it)
                 },
                 onCloseCloseClicked = {
-                    sharedViewModel.searchAppBarState.value =
-                        SearchAppBarState.CLOSED
-                    sharedViewModel.searchTextState.value = ""
+                    sharedViewModel.updateAppBarState(SearchAppBarState.CLOSED)
+                    sharedViewModel.updateSearchText("")
                 },
                 onTextChange = { newText ->
-                    sharedViewModel.searchTextState.value = newText
+                    sharedViewModel.updateSearchText(newText)
                 }
             )
         }
